@@ -16,7 +16,31 @@
 - 基本公式： $c_{v} = \frac{1}{\lambda} \sum\limits_{u \in N(v)}^{} c_{u}$， $\lambda$ 是一个常数
 - 问题分析：这是一个递归问题。需要初始值，为了不去这样求解，进行了转化
 - 问题转化：图中所有节点特征向量中心度组成的向量 $\boldsymbol c$ ，转化为： $\lambda \boldsymbol c = A \boldsymbol c$， $A$ 为图的邻接矩阵，则变为了求图的邻接矩阵的特征向量和特征值的问题。
-- 问题再分析：这里很让人疑惑。
+- 问题再分析：如果深究的话，让人疑惑的点在于：为什么一个递归问题可以不用初始值就解决，以及采用邻接矩阵计算特征向量和直接计算度的区别在哪。由于没找到推导过程，而且实际上对如何计算的理解对后面影响不大，所以其实只要直接记住这个计算方法以及特征向量的中心度的意义即可，可以参考：https://blog.csdn.net/qq_43760191/article/details/122675726。
+
+#### b 中间点中心度(Betweeness Centrality)
+- 基本思想：一个节点如果在很多其他节点的最短路径上，那它就很重要
+- 基本公式： $c_{v} = \sum\limits_{s \ne v \ne t} \frac{(\text{num of shortest paths between s and t containing v})}{(\text{num of shortest paths between s and t})}$ ，其中分子表示s和t之间的最短路径中包含v的条数，分母表示s和t间的最短路径条数。注意这里是所有的求和。
+
+#### c 距离中心度(Closeness Centrality)
+- 基本思想：节点到其他节点的路径最远则重要
+- 基本公式： $c_{v} = \frac{1}{\sum\limits_{u \ne v} \text{shortest path length between u and v}}$ ，分母表示节点u和v之间的最短路径长度求和。
+
+### 3.集群系数
+衡量一个节点周围有多”抱团“。
+计算方法： $e_{v} = \frac{(\text{num of edges among neighboring nodes})}{\binom{k_{v}}{2}} \in [0,1]$ ，分子表示与v节点之间的连接数，也可以数以节点v为中心的子图里有多少三角形。
+
+### 4.Graphlets
+就是计算图中有多少子图，这里用的都是诱导异构图。
+#### a 异构图、同构图、诱导图、非诱导图
+<img src="task02Assets/01.png" style="zoom:70%;" />
+<img src="task02Assets/02.png" style="zoom:70%;" />
+
+#### b 解释一下几个节点有几个子图怎么来的
+<img src="task02Assets/03.png" style="zoom:70%;" />
+
+#### c 匹配的过程
+<img src="task02Assets/04.png" style="zoom:70%;" />
 
 ## 二、连接层面的特征工程
 通过已知连接来补全未知的连接。
